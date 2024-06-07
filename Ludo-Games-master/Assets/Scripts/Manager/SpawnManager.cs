@@ -13,7 +13,7 @@ public class SpawnManager : Singleton<SpawnManager>
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void SpawnBoard()
     {
         // Spawn Board
