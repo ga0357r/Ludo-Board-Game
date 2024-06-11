@@ -37,7 +37,7 @@ public class NetworkManagerUI : MonoBehaviour
 
     private void OnServerStarted()
     {
-        SpawnManager.Instance.SpawnObjects();
+        SpawnManager.Instance.SpawnNetworkObjects();
     }
 
     private void OnDestroy()

@@ -3,39 +3,41 @@ using Unity.Netcode;
 
 public class SpawnManager : Singleton<SpawnManager>
 {
-    [SerializeField] private SpawnData boardSpawnData;
+    [SerializeField] private SpawnData spawnData;
 
-    public void SpawnObjects()
+    public void SpawnNetworkObjects()
     {
         if (NetworkManager.Singleton.IsServer)
         {
-            SpawnBoard();
+            SpawnObjectsOverNetwork();
         }
     }
 
-    [ServerRpc]
-    private void SpawnBoard()
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnObjectsOverNetwork()
     {
-        // Spawn Board
-        GameObject board = Instantiate<GameObject>(boardSpawnData.Parent);
-        NetworkObject networkObject = board.GetComponent<NetworkObject>();
-        
-        if (networkObject != null)
+        foreach (var parentWithChildren in spawnData.ParentsWithChildren)
         {
-            networkObject.Spawn();
-        }
+            // Spawn Parent
+            GameObject parentObject = Instantiate(parentWithChildren.parent);
+            NetworkObject parentNetworkObject = parentObject.GetComponent<NetworkObject>();
 
-
-        // Spawn Children
-        foreach (GameObject child in boardSpawnData.Children)
-        {
-            GameObject currentChild = Instantiate<GameObject>(child);
-            NetworkObject childNetworkObject = currentChild.GetComponent<NetworkObject>();
-
-            if (childNetworkObject != null)
+            if (parentNetworkObject != null)
             {
-                childNetworkObject.Spawn();
-                currentChild.transform.SetParent(board.transform, false);
+                parentNetworkObject.Spawn();
+            }
+
+            // Spawn Children
+            foreach (GameObject child in parentWithChildren.children)
+            {
+                GameObject childObject = Instantiate(child);
+                NetworkObject childNetworkObject = childObject.GetComponent<NetworkObject>();
+
+                if (childNetworkObject != null)
+                {
+                    childNetworkObject.Spawn();
+                    childObject.transform.SetParent(parentObject.transform, false);
+                }
             }
         }
     }

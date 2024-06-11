@@ -4,9 +4,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spawn Data", menuName = "Ludo/Spawn Data", order = 1)]
 public class SpawnData : ScriptableObject
 {
-    [SerializeField] private GameObject parent;
-    [SerializeField] private List<GameObject> children;
+    [System.Serializable]
+    public class ParentWithChildren
+    {
+        public string name;
+        public GameObject parent;
+        public List<GameObject> children = new List<GameObject>();
+    }
 
-    public GameObject Parent => parent;
-    public List<GameObject> Children => children;
+    [SerializeField] private List<ParentWithChildren> parentsWithChildren = new List<ParentWithChildren>();
+
+    public List<ParentWithChildren> ParentsWithChildren => parentsWithChildren;
 }
