@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class MainMenuUIManager : MonoBehaviour {
 
 	[SerializeField] private GameObject gamePlayPreference;
+	[SerializeField] private GameObject networkPreferences;
 	[SerializeField] private QuestionDialog quitDialog;
 
 	[SerializeField] private TokensRadioGroup tokensRadioGroup;
@@ -14,6 +16,10 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	private int playerCount = 2;
 	private Token.TokenType selectedToken = Token.TokenType.Blue;
+
+	private bool? isHost = null;
+
+	public bool? IsHost => isHost;
 
 	void Start ()
 	{
@@ -32,7 +38,30 @@ public class MainMenuUIManager : MonoBehaviour {
 		}
 	}
 
-	public void OnVSComputer ()
+	public void OnClickQuickPlayButton()
+	{
+		// enable Host Game or Join Game
+		networkPreferences.SetActive (true);
+	}
+
+	public void OnClickHostGameButton()
+	{
+        //NetworkManager.Singleton.StartHost();
+        // Show loading screen showing number of connected clients
+		isHost = true;
+        gamePlayPreference.SetActive(true);
+        networkPreferences.SetActive(false);	
+    }
+
+	public void OnClickJoinGameButton()
+	{
+        // NetworkManager.Singleton.StartClient();
+        gamePlayPreference.SetActive(true);
+        networkPreferences.SetActive(false);
+		isHost = false;
+    }
+
+    public void OnVSComputer ()
 	{
 		gamePlayPreference.SetActive (true);
 	}
