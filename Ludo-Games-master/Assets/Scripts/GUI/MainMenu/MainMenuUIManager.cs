@@ -66,23 +66,34 @@ public class MainMenuUIManager : MonoBehaviour {
 		gamePlayPreference.SetActive (true);
 	}
 
+	/// <summary>
+	/// Waiting For Players To Join UI
+	/// </summary>
+	public void ShowWaitingUI()
+	{
+
+	}
+
 	public void OnPlay ()
 	{
 		Token.TokenPlayer[] players = new Token.TokenPlayer[playerCount];
 		Token.TokenType[] types = new Token.TokenType[playerCount];
 
-		for (int i = 0; i < playerCount; i++) {
-			players [i] = Token.TokenPlayer.Computer;
-			types [i] = (Token.TokenType)i;
+		for (int i = 0; i < playerCount; i++)
+		{
+			players[i] = Token.TokenPlayer.Computer;
+			types[i] = (Token.TokenType)i;
 
-			if (types [i] == selectedToken) {
-				players [i] = Token.TokenPlayer.Human;
+			if (types[i] == selectedToken)
+			{
+				players[i] = Token.TokenPlayer.Human;
 			}
 		}
 
-		if ((int)selectedToken >= playerCount) {
-			players [playerCount - 1] = Token.TokenPlayer.Human;
-			types [playerCount - 1] = selectedToken;
+		if ((int)selectedToken >= playerCount)
+		{
+			players[playerCount - 1] = Token.TokenPlayer.Human;
+			types[playerCount - 1] = selectedToken;
 		}
 
 		GameMaster gm = GameMaster.instance;

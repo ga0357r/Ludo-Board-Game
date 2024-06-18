@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GamePlayPrefs : MonoBehaviour
 {
     [SerializeField] private MainMenuUIManager mainMenuUIManager;
-    [SerializeField] private GameObject playButton;
+    [SerializeField] private Button playButton;
     [SerializeField] private GameObject playerCountToggle;
     [SerializeField] private GameObject tokenSelectionToggle;
 
@@ -23,12 +23,16 @@ public class GamePlayPrefs : MonoBehaviour
             // Show Host Menu
 
             // enable all ui settings
-            playButton.SetActive(true);
+            playButton.gameObject.SetActive(true);
             playerCountToggle.SetActive(true);
             tokenSelectionToggle.SetActive(true);
 
             // make sure text is "Create Game"
             playButton.transform.GetChild(0).GetComponent<Text>().text = StringHelpers.CreateGame;
+
+            //on click button go to ludo board scene
+            playButton.onClick.RemoveAllListeners();
+            playButton.onClick.AddListener(OnClickCreateGameButton);
 
         }
         else if (mainMenuUIManager.IsHost == false)
@@ -40,6 +44,12 @@ public class GamePlayPrefs : MonoBehaviour
         {
             Debug.LogError($"Failure mainMenuUIManager.IsHost is {mainMenuUIManager.IsHost} ");
         }
+    }
+
+    private void OnClickCreateGameButton()
+    {
+        NetworkController.Instance.StartHost();
+        mainMenuUIManager.ShowWaitingUI();
     }
 
 
