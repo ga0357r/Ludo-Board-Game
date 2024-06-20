@@ -13,6 +13,7 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	[SerializeField] private TokensRadioGroup tokensRadioGroup;
 	[SerializeField] private PlayerCountRadioGroup playerCountRadioGroup;
+	[SerializeField] private GameObject waitingUI;
 
 	private int playerCount = 2;
 	private Token.TokenType selectedToken = Token.TokenType.Blue;
@@ -71,8 +72,29 @@ public class MainMenuUIManager : MonoBehaviour {
 	/// </summary>
 	public void ShowWaitingUI()
 	{
+		if(IsHost == null)
+		{
+			Debug.LogError("IsHost is null");
+			return;
+		}
 
-	}
+		waitingUI.SetActive (true);
+        
+		if (IsHost == true)
+		{
+			waitingUI.transform.GetChild(0).gameObject.SetActive (true);
+            // Call the method to check the number of connected clients
+            //InvokeRepeating(NetworkController.Instance.GetConnectedClientsNumber, 1.0f, 1.0f); // Check every 1 second
+        }
+
+		else
+		{
+            // disable host waiting UI
+            waitingUI.transform.GetChild(0).gameObject.SetActive(false);
+			// enable client waiting UI TODO
+        }
+
+    }
 
 	public void OnPlay ()
 	{

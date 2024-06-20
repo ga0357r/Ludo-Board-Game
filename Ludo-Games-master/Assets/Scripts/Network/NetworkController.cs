@@ -23,4 +23,16 @@ public class NetworkController : Singleton<NetworkController>
     {
         networkManager.StartClient();
     }
+
+    public int GetConnectedClientsNumber()
+    {
+        if (networkManager != null && NetworkManager.Singleton.IsServer)
+        {
+            int connectedClients = networkManager.ConnectedClientsList.Count;
+            return connectedClients;
+        }
+
+        Print.Error("Network Manager is null or this is not a server");
+        return 0;
+    }
 }
