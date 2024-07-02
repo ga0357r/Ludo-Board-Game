@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,9 +50,7 @@ public class GamePlayPrefs : MonoBehaviour
 
     private void OnClickCreateGameButton()
     {
-        NetworkController.Instance.StartHost();
-        mainMenuUIManager.ShowWaitingUI();
+        //NetworkController.Instance.StartHost();
+        //mainMenuUIManager.ShowWaitingUI();
     }
-
-
 }

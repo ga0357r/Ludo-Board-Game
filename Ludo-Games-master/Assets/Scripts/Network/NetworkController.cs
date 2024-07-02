@@ -2,37 +2,76 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using Photon;
+using Photon.Pun;
 
-public class NetworkController : Singleton<NetworkController>
+public class NetworkController : MonoBehaviourPunCallbacks
 {
-    [SerializeField] public NetworkManager networkManager;
+    #region Variables
 
-    public NetworkManager NetworkManager => networkManager;
+    private static NetworkController instance;
 
-    public void StartServer()
+    #endregion
+
+    #region Properties
+
+    public static NetworkController Instance => instance;
+
+    #endregion
+
+    private void Awake()
     {
-        networkManager.StartServer();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void StartHost()
+    private void Start()
     {
-        networkManager.StartHost();
+        ConnectToPhotonCloud();
     }
 
-    public void StartClient()
+    private void ConnectToPhotonCloud()
     {
-        networkManager.StartClient();
+        Print.Log("Connecting to Photon Cloud....");
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public void CreateRoom()
+    {
+        //networkManager.StartServer();
+    }
+
+    public void JoinRoom()
+    {
+        //networkManager.StartClient();
     }
 
     public int GetConnectedClientsNumber()
     {
-        if (networkManager != null && NetworkManager.Singleton.IsServer)
-        {
-            int connectedClients = networkManager.ConnectedClientsList.Count;
-            return connectedClients;
-        }
+        //if (networkManager != null && NetworkManager.Singleton.IsServer)
+        //{
+        //    int connectedClients = networkManager.ConnectedClientsList.Count;
+        //    return connectedClients;
+        //}
 
-        Print.Error("Network Manager is null or this is not a server");
+        //Print.Error("Network Manager is null or this is not a server");
+        //return 0;
         return 0;
     }
+
+    #region Callbacks
+
+    public override void OnConnectedToMaster()
+    {
+        Print.Log("Connected To Photon Cloud Server");
+    }
+
+    #endregion
 }
