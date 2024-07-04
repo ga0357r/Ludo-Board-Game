@@ -2,5 +2,5 @@ using UnityEngine.Animations;
 
 public static class StringHelpers
 {
-    public const string CreateGame = "Create Game";
+    public const string CreateRoom = "Create Room";
 }

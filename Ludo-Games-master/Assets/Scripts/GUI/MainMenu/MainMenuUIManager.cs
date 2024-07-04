@@ -17,11 +17,12 @@ public class MainMenuUIManager : MonoBehaviour {
 	private int playerCount = 2;
 	private Token.TokenType selectedToken = Token.TokenType.Blue;
 
-	private bool? isHost = null;
+	private bool? isCreator = null;
 
-	public bool? IsHost => isHost;
+	public bool? IsCreator => isCreator;
+	public int PlayerCount => playerCount;
 
-	void Start ()
+    void Start ()
 	{
 		tokensRadioGroup.onTokenTypeSelected += ((Token.TokenType type) => selectedToken = type);
 		playerCountRadioGroup.onPlayerCountSelected += ((int count) => playerCount = count);
@@ -40,25 +41,24 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	public void OnClickQuickPlayButton()
 	{
-		// enable Host Game or Join Game
-		networkPreferences.SetActive (true);
+		// TODO
+		//Join Random Game/Room 
 	}
 
-	public void OnClickHostGameButton()
+	public void OnClickCreateGameButton()
 	{
-        //NetworkManager.Singleton.StartHost();
-        // Show loading screen showing number of connected clients
-		isHost = true;
-        gamePlayPreference.SetActive(true);
-        networkPreferences.SetActive(false);	
+		// TODO Create Game/Room
+		isCreator = true;
+		gamePlayPreference.SetActive(true);
     }
 
 	public void OnClickJoinGameButton()
 	{
         // NetworkManager.Singleton.StartClient();
-        gamePlayPreference.SetActive(true);
-        networkPreferences.SetActive(false);
-		isHost = false;
+        //gamePlayPreference.SetActive(true);
+        //networkPreferences.SetActive(false);
+		//isHost = false;
+		//TODO Display Available Games to Join
     }
 
     public void OnVSComputer ()
@@ -71,7 +71,7 @@ public class MainMenuUIManager : MonoBehaviour {
 	/// </summary>
 	public void ShowWaitingUI()
 	{
-		if(IsHost == null)
+		if(IsCreator == null)
 		{
 			Debug.LogError("IsHost is null");
 			return;
@@ -79,7 +79,7 @@ public class MainMenuUIManager : MonoBehaviour {
 
 		waitingUI.SetActive (true);
         
-		if (IsHost == true)
+		if (IsCreator == true)
 		{
 			waitingUI.transform.GetChild(0).gameObject.SetActive (true);
             // Call the method to check the number of connected clients

@@ -19,7 +19,7 @@ public class GamePlayPrefs : MonoBehaviour
 
     private void ShowMenu()
     {
-        if (mainMenuUIManager.IsHost == true)
+        if (mainMenuUIManager.IsCreator == true)
         {
             // do smth
             // Show Host Menu
@@ -30,27 +30,31 @@ public class GamePlayPrefs : MonoBehaviour
             tokenSelectionToggle.SetActive(true);
 
             // make sure text is "Create Game"
-            playButton.transform.GetChild(0).GetComponent<Text>().text = StringHelpers.CreateGame;
+            playButton.transform.GetChild(0).GetComponent<Text>().text = StringHelpers.CreateRoom;
 
             //on click button go to ludo board scene
             playButton.onClick.RemoveAllListeners();
             playButton.onClick.AddListener(OnClickCreateGameButton);
 
         }
-        else if (mainMenuUIManager.IsHost == false)
+        else if (mainMenuUIManager.IsCreator == false)
         {
             // do smth
             // Show Client Menu
         }
         else
         {
-            Debug.LogError($"Failure mainMenuUIManager.IsHost is {mainMenuUIManager.IsHost} ");
+            Debug.LogError($"Failure mainMenuUIManager.IsHost is {mainMenuUIManager.IsCreator} ");
         }
     }
 
     private void OnClickCreateGameButton()
     {
-        //NetworkController.Instance.StartHost();
-        //mainMenuUIManager.ShowWaitingUI();
+        string roomName = "";
+        roomName =  "Room " + Random.Range(1000, 10000);
+        byte maxPlayers = (byte)mainMenuUIManager.PlayerCount;
+        maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 4);
+        RoomOptions roomOptions = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000 };
+        NetworkController.Instance.CreateRoom(roomName, roomOptions);
     }
 }

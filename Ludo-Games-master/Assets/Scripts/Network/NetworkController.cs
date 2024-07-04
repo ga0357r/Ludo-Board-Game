@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
     #region Variables
 
     private static NetworkController instance;
+    private bool hasConnectedToServer = false;
 
     #endregion
 
     #region Properties
 
     public static NetworkController Instance => instance;
+    public bool HasConnectedToServer => hasConnectedToServer;
 
     #endregion
 
@@ -42,9 +45,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public void CreateRoom()
+    public void CreateRoom(string roomName, RoomOptions roomOptions = null, TypedLobby typedLobby = null, string[] expectedUsers = null)
     {
-        //networkManager.StartServer();
+        PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby, expectedUsers);
     }
 
     public void JoinRoom()
@@ -65,11 +68,24 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return 0;
     }
 
+
+
     #region Callbacks
 
     public override void OnConnectedToMaster()
     {
         Print.Log("Connected To Photon Cloud Server");
+        hasConnectedToServer = true;
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Print.Log("Room Creation Successful");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Print.Log("Joined Room Successfully");
     }
 
     #endregion
