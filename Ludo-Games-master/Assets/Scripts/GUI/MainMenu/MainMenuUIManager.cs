@@ -20,9 +20,9 @@ public class MainMenuUIManager : MonoBehaviour {
 	private int playerCount = 2;
 	private Token.TokenType selectedToken = Token.TokenType.Blue;
 
-	private bool? isCreator = null;
+	private bool? createdRoom = null;
 
-	public bool? IsCreator => isCreator;
+	public bool? CreatedRoom => createdRoom;
 	public int PlayerCount => playerCount;
 
     void Start ()
@@ -65,7 +65,7 @@ public class MainMenuUIManager : MonoBehaviour {
 	public void OnClickCreateGameButton()
 	{
 		// TODO Create Game/Room
-		isCreator = true;
+		createdRoom = true;
 		gamePlayPreference.SetActive(true);
 		quickPlayObj.SetActive (false);
 		networkPreferences.SetActive (false);
@@ -84,35 +84,6 @@ public class MainMenuUIManager : MonoBehaviour {
 	{
 		gamePlayPreference.SetActive (true);
 	}
-
-	/// <summary>
-	/// Waiting For Players To Join UI
-	/// </summary>
-	public void ShowWaitingUI()
-	{
-		if(IsCreator == null)
-		{
-			Debug.LogError("IsHost is null");
-			return;
-		}
-
-		waitingUI.SetActive (true);
-        
-		if (IsCreator == true)
-		{
-			waitingUI.transform.GetChild(0).gameObject.SetActive (true);
-            // Call the method to check the number of connected clients
-            //InvokeRepeating(NetworkController.Instance.GetConnectedClientsNumber, 1.0f, 1.0f); // Check every 1 second
-        }
-
-		else
-		{
-            // disable host waiting UI
-            waitingUI.transform.GetChild(0).gameObject.SetActive(false);
-			// enable client waiting UI TODO
-        }
-
-    }
 
 	public void OnPlay ()
 	{

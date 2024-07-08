@@ -19,7 +19,7 @@ public class GamePlayPrefs : MonoBehaviour
 
     private void ShowMenu()
     {
-        if (mainMenuUIManager.IsCreator == true)
+        if (mainMenuUIManager.CreatedRoom == true)
         {
             // do smth
             // Show Host Menu
@@ -37,14 +37,14 @@ public class GamePlayPrefs : MonoBehaviour
             playButton.onClick.AddListener(OnClickCreateGameButton);
 
         }
-        else if (mainMenuUIManager.IsCreator == false)
+        else if (mainMenuUIManager.CreatedRoom == false)
         {
             // do smth
             // Show Client Menu
         }
         else
         {
-            Debug.LogError($"Failure mainMenuUIManager.IsHost is {mainMenuUIManager.IsCreator} ");
+            Debug.LogError($"Failure mainMenuUIManager.IsHost is {mainMenuUIManager.CreatedRoom} ");
         }
     }
 

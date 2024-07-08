@@ -1540,12 +1540,12 @@ GameObject:
   m_Component:
   - component: {fileID: 649675825}
   m_Layer: 5
-  m_Name: Host
+  m_Name: CreatedRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &649675825
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5171,6 +5171,7 @@ GameObject:
   - component: {fileID: 4676680778222583204}
   - component: {fileID: 4678805900373795898}
   - component: {fileID: 4786637253668400148}
+  - component: {fileID: 4899430761332294597}
   m_Layer: 5
   m_Name: Waiting UI
   m_TagString: Untagged
@@ -5178,6 +5179,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &4899430761332294597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899430761332294596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d031c0a415a09459cfb42a77e02184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuUIManager: {fileID: 497046944}
+  createdRoom: {fileID: 649675824}
+  createdRoomBodyText: {fileID: 2134310189}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
