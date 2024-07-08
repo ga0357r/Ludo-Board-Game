@@ -56,5 +56,6 @@ public class GamePlayPrefs : MonoBehaviour
         maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 4);
         RoomOptions roomOptions = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000 };
         NetworkController.Instance.CreateRoom(roomName, roomOptions);
+        gameObject.SetActive(false);
     }
 }

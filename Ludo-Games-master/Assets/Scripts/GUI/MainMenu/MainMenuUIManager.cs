@@ -13,6 +13,9 @@ public class MainMenuUIManager : MonoBehaviour {
 	[SerializeField] private TokensRadioGroup tokensRadioGroup;
 	[SerializeField] private PlayerCountRadioGroup playerCountRadioGroup;
 	[SerializeField] private GameObject waitingUI;
+	[SerializeField] private GameObject quickPlayObj;
+	[SerializeField] private GameObject settingsObj;
+	[SerializeField] private GameObject aboutObj;
 
 	private int playerCount = 2;
 	private Token.TokenType selectedToken = Token.TokenType.Blue;
@@ -26,14 +29,28 @@ public class MainMenuUIManager : MonoBehaviour {
 	{
 		tokensRadioGroup.onTokenTypeSelected += ((Token.TokenType type) => selectedToken = type);
 		playerCountRadioGroup.onPlayerCountSelected += ((int count) => playerCount = count);
-	}
+
+		networkPreferences.SetActive(false);
+		quickPlayObj.SetActive(false);
+		settingsObj.SetActive(false);
+		aboutObj.SetActive(false);
+
+		NetworkController.Instance.OnFinishedConnectingToPhotonCloud += OnConnectedToPhotonCloudServer;
+		NetworkController.Instance.OnFinishedCreatingRoom += OnFinishedCreatingRoom;
+    }
 
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			if (gamePlayPreference.activeSelf) {
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
+			if (gamePlayPreference.activeSelf) 
+			{
 				gamePlayPreference.SetActive (false);
-			} else {
+                networkPreferences.SetActive(true);
+                quickPlayObj.SetActive(true);
+            } 
+			else 
+			{
 				quitDialog.ShowDialog ("Are you sure want to quit?", () => Application.Quit (), null);
 			}
 		}
@@ -50,6 +67,8 @@ public class MainMenuUIManager : MonoBehaviour {
 		// TODO Create Game/Room
 		isCreator = true;
 		gamePlayPreference.SetActive(true);
+		quickPlayObj.SetActive (false);
+		networkPreferences.SetActive (false);
     }
 
 	public void OnClickJoinGameButton()
@@ -122,6 +141,31 @@ public class MainMenuUIManager : MonoBehaviour {
 		gm.SelectedTokenPlayers = players;
 
 		SceneManager.LoadScene ("GamePlay");
+	}
+
+	private void OnConnectedToPhotonCloudServer()
+	{
+		networkPreferences.SetActive (true);
+		quickPlayObj.SetActive (true);
+        settingsObj.SetActive(true);
+        aboutObj.SetActive(true);
+    }
+	
+	private void OnFinishedCreatingRoom()
+	{
+        gamePlayPreference.SetActive(false);
+		waitingUI.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        NetworkController.Instance.OnFinishedConnectingToPhotonCloud -= OnConnectedToPhotonCloudServer;
+        NetworkController.Instance.OnFinishedCreatingRoom -= OnFinishedCreatingRoom;
+    }
+
+	public void ToggleGamePlayPrefs(bool enable)
+	{
+		gamePlayPreference.SetActive(enable);
 	}
 
 }

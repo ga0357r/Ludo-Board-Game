@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
     private static NetworkController instance;
     private bool hasConnectedToServer = false;
 
+    public event Action OnFinishedConnectingToPhotonCloud;
+    public event Action OnFinishedCreatingRoom;
+    public event Action OnFinishedJoiningRoom;
     #endregion
 
     #region Properties
 
     public static NetworkController Instance => instance;
     public bool HasConnectedToServer => hasConnectedToServer;
-
     #endregion
 
     private void Awake()
@@ -76,16 +79,19 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         Print.Log("Connected To Photon Cloud Server");
         hasConnectedToServer = true;
+        OnFinishedConnectingToPhotonCloud?.Invoke();
     }
 
     public override void OnCreatedRoom()
     {
         Print.Log("Room Creation Successful");
+        OnFinishedCreatingRoom?.Invoke();
     }
 
     public override void OnJoinedRoom()
     {
         Print.Log("Joined Room Successfully");
+        OnFinishedJoiningRoom?.Invoke();
     }
 
     #endregion

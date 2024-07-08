@@ -1208,6 +1208,9 @@ MonoBehaviour:
   tokensRadioGroup: {fileID: 1096475859}
   playerCountRadioGroup: {fileID: 1218550894}
   waitingUI: {fileID: 4899430761332294596}
+  quickPlayObj: {fileID: 2115378508}
+  settingsObj: {fileID: 71082972}
+  aboutObj: {fileID: 1531614623}
 --- !u!4 &497046945
 Transform:
   m_ObjectHideFlags: 0
@@ -4932,7 +4935,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Waiting For 1 Player(s)...1/2 connected
+  m_Text: 'Waiting For 1 Player(s)
+
+    1/2 connected'
 --- !u!222 &2134310190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5118,7 +5123,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Game Successfully Created
+  m_Text: Room Successfully Created
 --- !u!1 &4899172962722148668
 GameObject:
   m_ObjectHideFlags: 0
