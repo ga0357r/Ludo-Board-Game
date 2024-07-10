@@ -8,8 +8,8 @@ public class WaitingUI : MonoBehaviour
     [SerializeField] private MainMenuUIManager mainMenuUIManager;
     [SerializeField] private GameObject createdRoom;
     [SerializeField] private Text createdRoomBodyText;
-
-    //[SerializeField] private GameObject joiningRoom;
+    [SerializeField] private GameObject joiningRoom;
+    [SerializeField] private GameObject roomTemplatePrefab;
 
     private void OnEnable()
     {
@@ -29,18 +29,21 @@ public class WaitingUI : MonoBehaviour
 
         if (mainMenuUIManager.CreatedRoom == true)
         {
-            // disable joiningRoom waiting UI
+            joiningRoom.SetActive(false);
             createdRoom.SetActive(true);
-            // Call the method to check the number of connected clients
-            //InvokeRepeating(NetworkController.Instance.GetConnectedClientsNumber, 1.0f, 1.0f); // Check every 1 second
         }
 
         else
         {
-            // disable createdRoom waiting UI
-            //createdRoom.SetActive(true);
-            // enable client waiting UI TODO
+            createdRoom.SetActive(false);
+            joiningRoom.SetActive(true);
+            DisplayAvailableRooms();
         }
 
+    }
+
+    private void DisplayAvailableRooms()
+    {
+        //TODO
     }
 }

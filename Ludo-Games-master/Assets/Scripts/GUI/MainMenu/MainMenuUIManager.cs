@@ -58,26 +58,25 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	public void OnClickQuickPlayButton()
 	{
-		// TODO
-		//Join Random Game/Room 
+		NetworkController.Instance.JoinRandomRoom(); 
 	}
 
 	public void OnClickCreateGameButton()
 	{
-		// TODO Create Game/Room
 		createdRoom = true;
 		gamePlayPreference.SetActive(true);
 		quickPlayObj.SetActive (false);
 		networkPreferences.SetActive (false);
+		waitingUI.SetActive(false);
     }
 
 	public void OnClickJoinGameButton()
 	{
-        // NetworkManager.Singleton.StartClient();
-        //gamePlayPreference.SetActive(true);
-        //networkPreferences.SetActive(false);
-		//isHost = false;
-		//TODO Display Available Games to Join
+		createdRoom = false;
+        gamePlayPreference.SetActive(false);
+        quickPlayObj.SetActive(false);
+        networkPreferences.SetActive(false);
+        waitingUI.SetActive(true);
     }
 
     public void OnVSComputer ()
