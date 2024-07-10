@@ -58,16 +58,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
         //networkManager.StartClient();
     }
 
+    public void JoinRandomRoom()
+    {
+        PhotonNetwork.JoinRandomRoom();
+    }
+
     public int GetConnectedClientsNumber()
     {
-        //if (networkManager != null && NetworkManager.Singleton.IsServer)
-        //{
-        //    int connectedClients = networkManager.ConnectedClientsList.Count;
-        //    return connectedClients;
-        //}
-
-        //Print.Error("Network Manager is null or this is not a server");
-        //return 0;
+        // how to get connected clients number in room for photon
+        
         return 0;
     }
 
@@ -92,6 +91,21 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         Print.Log("Joined Room Successfully");
         OnFinishedJoiningRoom?.Invoke();
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Print.Error($"Failed to join room. Failure code {returnCode}. {message}");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Print.Error($"Failed to join room. Failure code {returnCode}. {message}");
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Print.Error($"Failed to join room. Failure code {returnCode}. {message}");
     }
 
     #endregion
