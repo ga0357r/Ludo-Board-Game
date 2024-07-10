@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,8 @@ public class WaitingUI : MonoBehaviour
 
     private void DisplayAvailableRooms()
     {
-        //TODO
+        //TODO Register to NetworkController.OnFinishedRoomListUpdate
+        // Spawn roomTemplatePrefab
+        NetworkController.Instance.JoinLobby();
     }
 }

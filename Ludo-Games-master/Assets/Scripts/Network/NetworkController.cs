@@ -16,6 +16,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public event Action OnFinishedConnectingToPhotonCloud;
     public event Action OnFinishedCreatingRoom;
     public event Action OnFinishedJoiningRoom;
+    public event Action OnFinishedJoiningLobby;
+    public event Action OnFinishedRoomListUpdate;
     #endregion
 
     #region Properties
@@ -70,6 +72,14 @@ public class NetworkController : MonoBehaviourPunCallbacks
         return 0;
     }
 
+    public void JoinLobby()
+    {
+        if (!PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.JoinLobby();
+        }
+    }
+
 
 
     #region Callbacks
@@ -107,6 +117,23 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         Print.Error($"Failed to join room. Failure code {returnCode}. {message}");
     }
+
+    public override void OnJoinedLobby()
+    {
+        Print.Log("Joined Lobby");
+        OnFinishedJoiningLobby?.Invoke();
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        //TODO
+        //List Available Rooms In UI
+        // Use Events
+        Print.Log("Get Available Rooms");
+        OnFinishedRoomListUpdate?.Invoke();
+    }
+
+    
 
     #endregion
 }
