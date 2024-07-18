@@ -17,7 +17,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public event Action OnFinishedCreatingRoom;
     public event Action OnFinishedJoiningRoom;
     public event Action OnFinishedJoiningLobby;
-    public event Action OnFinishedRoomListUpdate;
+    public event Action<List<RoomInfo>> OnFinishedRoomListUpdate;
     #endregion
 
     #region Properties
@@ -130,7 +130,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
         //List Available Rooms In UI
         // Use Events
         Print.Log("Get Available Rooms");
-        OnFinishedRoomListUpdate?.Invoke();
+        OnFinishedRoomListUpdate?.Invoke(roomList);
     }
 
     
