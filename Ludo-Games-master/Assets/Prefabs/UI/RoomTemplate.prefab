@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 5859320552372130173}
   - component: {fileID: 1112930044480821688}
   - component: {fileID: 5424227205491968843}
-  - component: {fileID: 1474308757987944814}
+  - component: {fileID: 2129805959581270379}
   m_Layer: 5
   m_Name: RoomTemplate
   m_TagString: Untagged
@@ -180,10 +180,10 @@ RectTransform:
   - {fileID: 6202369890252452693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2843929314644754315
 CanvasRenderer:
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &1474308757987944814
+--- !u!114 &2129805959581270379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6150148185992500413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40b744eae97c5fa47879a477d0f0b667, type: 3}
+  m_Script: {fileID: 11500000, guid: 1af90c0f4bce7584bbb7e3d3de309fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RoomNameText: {fileID: 2102738114778619358}

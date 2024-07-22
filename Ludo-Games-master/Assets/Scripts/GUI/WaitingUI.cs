@@ -80,7 +80,7 @@ public class WaitingUI : MonoBehaviour
         {
             GameObject entry = Instantiate(roomTemplatePrefab, availableRooms);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
+            entry.GetComponent<RoomTemplate>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
             roomListEntries.Add(info.Name, entry);
         }
     }

@@ -55,9 +55,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, roomOptions, typedLobby, expectedUsers);
     }
 
-    public void JoinRoom()
+    public void JoinRoom(string roomName, string[] expectedUsers = null)
     {
-        //networkManager.StartClient();
+        PhotonNetwork.JoinRoom(roomName, expectedUsers);
     }
 
     public void JoinRandomRoom()
@@ -80,7 +80,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }
 
-
+    public void LeaveLobby()
+    {
+        if (PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.LeaveLobby();
+        }
+    }
 
     #region Callbacks
 
