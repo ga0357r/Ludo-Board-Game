@@ -12,6 +12,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     private static NetworkController instance;
     private bool hasConnectedToServer = false;
+    private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
+    private Dictionary<string, GameObject> roomListEntries = new Dictionary<string, GameObject>();
 
     public event Action OnFinishedConnectingToPhotonCloud;
     public event Action OnFinishedCreatingRoom;
@@ -88,7 +90,63 @@ public class NetworkController : MonoBehaviourPunCallbacks
         }
     }
 
-    #region Callbacks
+    private void UpdateRoomListView(in GameObject roomTemplatePrefab, in Transform availableRooms)
+    {
+        foreach (RoomInfo info in cachedRoomList.Values)
+        {
+            GameObject entry = Instantiate(roomTemplatePrefab, availableRooms);
+            entry.transform.localScale = Vector3.one;
+            entry.GetComponent<RoomTemplate>().Initialize(info.Name, (byte)info.PlayerCount, (byte)info.MaxPlayers);
+            roomListEntries.Add(info.Name, entry);
+        }
+    }
+
+    private void UpdateCachedRoomList(List<RoomInfo> roomList)
+    {
+        foreach (RoomInfo info in roomList)
+        {
+            // Remove room from cached room list if it got closed, became invisible or was marked as removed
+            if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+            {
+                if (cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList.Remove(info.Name);
+                }
+
+                continue;
+            }
+
+            // Update cached room info
+            if (cachedRoomList.ContainsKey(info.Name))
+            {
+                cachedRoomList[info.Name] = info;
+            }
+            // Add new room info to cache
+            else
+            {
+                cachedRoomList.Add(info.Name, info);
+            }
+        }
+    }
+
+    private void ClearRoomListView()
+    {
+        foreach (GameObject entry in roomListEntries.Values)
+        {
+            Destroy(entry.gameObject);
+        }
+
+        roomListEntries.Clear();
+    }
+
+    public void DisplayAvailableRooms(in List<RoomInfo> roomList, in GameObject roomTemplatePrefab, in Transform availableRooms)
+    {
+        ClearRoomListView();
+        UpdateCachedRoomList(roomList);
+        UpdateRoomListView(roomTemplatePrefab, availableRooms);
+    }
+
+    #region Network Callbacks
 
     public override void OnConnectedToMaster()
     {
