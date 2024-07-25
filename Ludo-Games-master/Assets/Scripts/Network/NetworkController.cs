@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -164,6 +162,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Print.Log("Joined Room Successfully");
+
+        cachedRoomList.Clear();
         OnFinishedJoiningRoom?.Invoke();
     }
 

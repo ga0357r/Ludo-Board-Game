@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -11,10 +12,20 @@ public class RoomTemplate : MonoBehaviour
 
     private string roomName;
 
+    #region Monobehaviour Callbacks
+
     public void Start()
     {
         JoinRoomButton.onClick.AddListener(OnClickJoinRoomButton);
+        NetworkController.Instance.OnFinishedJoiningRoom += OnRoomFull;
     }
+
+    private void OnDisable()
+    {
+        JoinRoomButton.onClick.RemoveListener(OnClickJoinRoomButton);
+    }
+    #endregion
+
 
     public void Initialize(string name, byte currentPlayers, byte maxPlayers)
     {
@@ -29,8 +40,24 @@ public class RoomTemplate : MonoBehaviour
         NetworkController.Instance.JoinRoom(roomName);
     }
 
-    private void OnDisable()
+    private bool IsRoomIsFull()
     {
-        JoinRoomButton.onClick.RemoveListener(OnClickJoinRoomButton);
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            Print.Error("Client not part of any room!");
+            return false;
+        }
+
+        // Check if the room is full
+        if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers) return true;
+        return false;
+    }
+
+    private void OnRoomFull()
+    {
+        if (IsRoomIsFull())
+        {
+            SceneController.Instance.LoadSceneAsync(Scenes.GamePlay);
+        }
     }
 }
